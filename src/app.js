@@ -1,3 +1,24 @@
+var bugData = [
+  {id: 1, 
+  	priority: 'P1', 
+  	status:'Open', 
+  	owner:'Eduardo', 
+  	title:'App crashes on open'
+  },
+  {id: 2, 
+  	priority: 'P2', 
+  	status:'New', 
+  	owner:'Abraham', 
+  	title:'Error 404'
+  },
+   {id: 3, 
+  	priority: 'P3', 
+  	status:'Submitted', 
+  	owner:'Oscar', 
+  	title:'Server unstable'
+  },
+];
+
 var BugList = React.createClass({
   render: function() {
     return (
@@ -8,6 +29,9 @@ var BugList = React.createClass({
 
 var BugTable = React.createClass({
   render: function() {
+  	var bugRows = this.props.bugs.map(function(bug){
+  	return <BugRow key={bug.id} bug={bug}/>	
+  	});
     return (
       <table>
       	<thead>
@@ -20,8 +44,7 @@ var BugTable = React.createClass({
       		</tr>
       	</thead>
       	<tbody>
-      		<BugRow id={1} priority={"P1"} status={"Open"} owner={"Eduardo"} title={"Something failed"}/>
-      		<BugRow id={2} priority={"P2"} status={"New"} owner={"Abraham"} title={"Not working"}/>
+      		{bugRows}
       	</tbody>
       </table>
     )
@@ -32,11 +55,11 @@ var BugRow = React.createClass({
   render: function() {
     return (
       <tr>
-      	<td>{this.props.id}</td>
-      	<td>{this.props.status}</td>
-      	<td>{this.props.priority}</td>
-      	<td>{this.props.owner}</td>
-      	<td>{this.props.title}</td>
+      	<td>{this.props.bug.id}</td>
+      	<td>{this.props.bug.status}</td>
+      	<td>{this.props.bug.priority}</td>
+      	<td>{this.props.bug.owner}</td>
+      	<td>{this.props.bug.title}</td>
       </tr>
     )
   }
@@ -63,7 +86,7 @@ ReactDOM.render(
 	    <h1>Bug Tracker</h1>
 	    <BugFilter />
 	    <hr />
-	    <BugTable />
+	    <BugTable bugs={bugData}/>
 	    <hr />
 	    <BugAdd />
 	 </div>,
