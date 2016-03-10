@@ -9,7 +9,35 @@ var BugList = React.createClass({
 var BugTable = React.createClass({
   render: function() {
     return (
-      <div>BugTable expected here!</div>
+      <table>
+      	<thead>
+      		<tr>
+      			<th>Id</th>
+      			<th>Status</th>
+      			<th>Priority</th>
+      			<th>Owner</th>
+      			<th>Title</th>
+      		</tr>
+      	</thead>
+      	<tbody>
+      		<BugRow id={1} priority={"P1"} status={"Open"} owner={"Eduardo"} title={"Something failed"}/>
+      		<BugRow id={2} priority={"P2"} status={"New"} owner={"Abraham"} title={"Not working"}/>
+      	</tbody>
+      </table>
+    )
+  }
+});
+
+var BugRow = React.createClass({
+  render: function() {
+    return (
+      <tr>
+      	<td>{this.props.id}</td>
+      	<td>{this.props.status}</td>
+      	<td>{this.props.priority}</td>
+      	<td>{this.props.owner}</td>
+      	<td>{this.props.title}</td>
+      </tr>
     )
   }
 });
