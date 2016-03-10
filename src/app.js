@@ -20,9 +20,21 @@ var bugData = [
 ];
 
 var BugList = React.createClass({
+  getInitialState: function(){
+  	return{
+  		bugs:bugData
+  	};
+  },
   render: function() {
     return (
-      <div>BugList expected here!</div>
+    <div>
+	    <h1>Bug Tracker</h1>
+	    <BugFilter />
+	    <hr />
+	    <BugTable bugs={this.state.bugs}/>
+	    <hr />
+	    <BugAdd />
+	 </div>
     )
   }
 });
@@ -82,13 +94,6 @@ var BugAdd = React.createClass({
 });
 
 ReactDOM.render(
-	<div>
-	    <h1>Bug Tracker</h1>
-	    <BugFilter />
-	    <hr />
-	    <BugTable bugs={bugData}/>
-	    <hr />
-	    <BugAdd />
-	 </div>,
+<BugList />,
     document.getElementById('main')
 );
