@@ -16,6 +16,7 @@
   "author": "Eduardo Gochi",
   "license": "ISC",
   "dependencies": {
+    "babel-preset-react": "^6.5.0",
     "express": "^4.13.4"
   }
 }
