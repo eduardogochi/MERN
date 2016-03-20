@@ -33,11 +33,26 @@ var BugList = React.createClass({
 	    <hr />
 	    <BugTable bugs={this.state.bugs}/>
 	    <hr />
-	    <BugAdd />
+	    <BugAdd addBug={this.addBug}/>
 	 </div>
     )
-  }
+  },
+
+  testNewBug: function(){
+  	var nextId = this.state.bugs.length + 1;
+  	this.addBug({id: nextId, priority: 'P2', status: 'New', owner: 'Sandra', title: 'Warning on module 1'});
+  },
+
+  addBug: function(bug){
+  	console.log('Adding Bug: ', bug);
+  	var bugsModified = this.state.bugs.slice();
+  	bugsModified.push(bug);
+  	this.setState({bugs: bugsModified});
+
+  },
+
 });
+
 
 var BugTable = React.createClass({
   render: function() {
@@ -65,6 +80,7 @@ var BugTable = React.createClass({
 
 var BugRow = React.createClass({
   render: function() {
+  	console.log("Rendering BugFilter");
     return (
       <tr>
       	<td>{this.props.bug.id}</td>
@@ -79,6 +95,7 @@ var BugRow = React.createClass({
 
 var BugFilter = React.createClass({
   render: function() {
+  	console.log("Rendering BugFilter");
     return (
       <div>BugFilter expected here!</div>
     )
@@ -86,10 +103,34 @@ var BugFilter = React.createClass({
 });
 
 var BugAdd = React.createClass({
+	getInitialState:function(){
+		return {
+			bugs: bugData
+		}
+	},
   render: function() {
     return (
-      <div>BugAdd expected here!</div>
+      <div>
+      	<form name="BugAdd">
+      		<input type="text" name="owner" placeholder="Owner" />
+      		<input type="text" name="title" placeholder="Title" />
+      		<button onClick={this.handleSubmit}>Add Bug</button>
+      	</form>
+      </div>
     )
+  },
+
+  handleSubmit: function(e){
+  	e.preventDefault();
+  	var form = document.forms.BugAdd;
+  	this.props.addBug({
+  		owner: form.owner.value,
+  		title: form.title.value,
+  		status: "New",
+  		priority: "P1"
+  	});
+  	form.owner.value = "";
+  	form.title.value = "";
   }
 });
 
