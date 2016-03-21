@@ -23,7 +23,7 @@ b.on('update', makeBundle);
 function makeBundle(){
 	b.transform('babelify', {presets:'react'})
 	.bundle()
-	.on('error', function(){
+	.on('error', function(err){
 		console.error(err.message);
 		console.error(err.codeFrame);
 	})
