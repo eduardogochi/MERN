@@ -1,7 +1,9 @@
 var express = require('express'),
-	bodyParser = require('body-parser');
+	bodyParser = require('body-parser'),
+	MongoClient = require('mongodb').MongoClient;
 
-var app = express();
+var app = express(),
+	db;
 
 app.use(express.static('static'));
 
@@ -26,8 +28,9 @@ var bugData = [
 }];
 
 app.get('/api/bugs', function(req,res){
-	//res.status(200).send(JSON.stringify(bugData));
-	res.json(bugData);
+	db.collection("bugs").find().toArray(function(err, docs){
+		res.json(docs)
+	});
 });
 
 app.use(bodyParser.json());
@@ -41,7 +44,10 @@ app.post('/api/bugs', function(req,res){
 });
 
 
-var server = app.listen(3000, function(){
-	var port = server.address().port;
-	console.log('Started server at port ', port);
+MongoClient.connect('mongodb://localhost/bugsdb', function(err, dbConnection){
+	db = dbConnection;
+	var server = app.listen(3000, function(){
+		var port = server.address().port;
+		console.log('Started server at port ', port);
+	});
 });
