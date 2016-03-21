@@ -1,6 +1,81 @@
-var React = require('react'),
-    ReactDOM = require('react-dom'),
-    $ = require('jquery');
+var React = require('react');
+var ReactDOM = require('react-dom');
+var $ = require('jquery');
+
+var BugFilter = React.createClass({
+  render: function() {
+    console.log("Rendering BugFilter");
+    return (
+      <div>BugFilter expected here!</div>
+    )
+  }
+});
+
+var BugRow = React.createClass({
+  render: function() {
+    console.log("Rendering BugFilter");
+    return (
+      <tr>
+        <td>{this.props.bug._id}</td>
+        <td>{this.props.bug.status}</td>
+        <td>{this.props.bug.priority}</td>
+        <td>{this.props.bug.owner}</td>
+        <td>{this.props.bug.title}</td>
+      </tr>
+    )
+  }
+});
+
+var BugTable = React.createClass({
+  render: function() {
+    var bugRows = this.props.bugs.map(function(bug){
+    return <BugRow key={bug._id} bug={bug}/>  
+    });
+    return (
+      <table>
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Status</th>
+            <th>Priority</th>
+            <th>Owner</th>
+            <th>Title</th>
+          </tr>
+        </thead>
+        <tbody>
+          {bugRows}
+        </tbody>
+      </table>
+    )
+  }
+});
+
+var BugAdd = React.createClass({
+  render: function() {
+    return (
+      <div>
+        <form name="BugAdd">
+          <input type="text" name="owner" placeholder="Owner" />
+          <input type="text" name="title" placeholder="Title" />
+          <button onClick={this.handleSubmit}>Add Bug</button>
+        </form>
+      </div>
+    )
+  },
+
+  handleSubmit: function(e){
+    e.preventDefault();
+    var form = document.forms.BugAdd;
+    this.props.addBug({
+      owner: form.owner.value,
+      title: form.title.value,
+      status: "New",
+      priority: "P1"
+    });
+    form.owner.value = "";
+    form.title.value = "";
+  }
+});
 
 var BugList = React.createClass({
   getInitialState: function(){
@@ -26,11 +101,6 @@ var BugList = React.createClass({
     )
   },
 
-  testNewBug: function(){
-  	var nextId = this.state.bugs.length + 1;
-  	this.addBug({id: nextId, priority: 'P2', status: 'New', owner: 'Sandra', title: 'Warning on module 1'});
-  },
-
   addBug: function(bug){
   	console.log('Adding Bug: ', bug);
     $.ajax({
@@ -47,86 +117,9 @@ var BugList = React.createClass({
         console.log("Error adding bug: ", err);
       }
     });
-
-  },
-
-});
-
-
-var BugTable = React.createClass({
-  render: function() {
-  	var bugRows = this.props.bugs.map(function(bug){
-  	return <BugRow key={bug._id} bug={bug}/>	
-  	});
-    return (
-      <table>
-      	<thead>
-      		<tr>
-      			<th>Id</th>
-      			<th>Status</th>
-      			<th>Priority</th>
-      			<th>Owner</th>
-      			<th>Title</th>
-      		</tr>
-      	</thead>
-      	<tbody>
-      		{bugRows}
-      	</tbody>
-      </table>
-    )
   }
 });
 
-var BugRow = React.createClass({
-  render: function() {
-  	console.log("Rendering BugFilter");
-    return (
-      <tr>
-      	<td>{this.props.bug._id}</td>
-      	<td>{this.props.bug.status}</td>
-      	<td>{this.props.bug.priority}</td>
-      	<td>{this.props.bug.owner}</td>
-      	<td>{this.props.bug.title}</td>
-      </tr>
-    )
-  }
-});
-
-var BugFilter = React.createClass({
-  render: function() {
-  	console.log("Rendering BugFilter");
-    return (
-      <div>BugFilter expected here!</div>
-    )
-  }
-});
-
-var BugAdd = React.createClass({
-  render: function() {
-    return (
-      <div>
-      	<form name="BugAdd">
-      		<input type="text" name="owner" placeholder="Owner" />
-      		<input type="text" name="title" placeholder="Title" />
-      		<button onClick={this.handleSubmit}>Add Bug</button>
-      	</form>
-      </div>
-    )
-  },
-
-  handleSubmit: function(e){
-  	e.preventDefault();
-  	var form = document.forms.BugAdd;
-  	this.props.addBug({
-  		owner: form.owner.value,
-  		title: form.title.value,
-  		status: "New",
-  		priority: "P1"
-  	});
-  	form.owner.value = "";
-  	form.title.value = "";
-  }
-});
 
 ReactDOM.render(
 <BugList />,
