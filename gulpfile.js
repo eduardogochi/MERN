@@ -23,8 +23,13 @@ b.on('update', makeBundle);
 function makeBundle(){
 	b.transform('babelify', {presets:'react'})
 	.bundle()
+	.on('error', function(){
+		console.error(err.message);
+		console.error(err.codeFrame);
+	})
 	.pipe(source('bundle.js'))
 	.pipe(gulp.dest('static/'));
+	console.log("Bundle updated successfully!")
 }
 
 makeBundle();
@@ -32,3 +37,5 @@ makeBundle();
 return b;
 
 });
+
+gulp.task('default', ['watch'])
