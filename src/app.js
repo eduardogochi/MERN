@@ -1,29 +1,13 @@
-var bugData = [
-  {id: 1, 
-  	priority: 'P1', 
-  	status:'Open', 
-  	owner:'Eduardo', 
-  	title:'App crashes on open'
-  },
-  {id: 2, 
-  	priority: 'P2', 
-  	status:'New', 
-  	owner:'Abraham', 
-  	title:'Error 404'
-  },
-   {id: 3, 
-  	priority: 'P3', 
-  	status:'Submitted', 
-  	owner:'Oscar', 
-  	title:'Server unstable'
-  },
-];
-
 var BugList = React.createClass({
   getInitialState: function(){
   	return{
-  		bugs:bugData
+  		bugs:[]
   	};
+  },
+  componentDidMount: function(){
+      $.ajax('api/bugs').done(function(data){
+          this.setState({bugs:data});
+      }.bind(this));
   },
   render: function() {
     return (
@@ -103,11 +87,6 @@ var BugFilter = React.createClass({
 });
 
 var BugAdd = React.createClass({
-	getInitialState:function(){
-		return {
-			bugs: bugData
-		}
-	},
   render: function() {
     return (
       <div>

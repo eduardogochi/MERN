@@ -15,13 +15,13 @@ var bugData = [
 { id: 2,
   priority: 'P2',
   status: 'New',
-  owner: 'Abraham',
+  owner: 'Lucas',
   title: 'Error 404'
 }, 
 { id: 3,
   priority: 'P3',
   status: 'Submitted',
-  owner: 'Oscar',
+  owner: 'Abraham',
   title: 'Server unstable'
 }];
 
