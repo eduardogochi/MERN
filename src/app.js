@@ -29,9 +29,20 @@ var BugList = React.createClass({
 
   addBug: function(bug){
   	console.log('Adding Bug: ', bug);
-  	var bugsModified = this.state.bugs.slice();
-  	bugsModified.push(bug);
-  	this.setState({bugs: bugsModified});
+    $.ajax({
+      type:'POST',
+      url:'/api/bugs',
+      contentType:'application/json',
+      data:JSON.stringify(bug),
+      success: function(data){
+        var bug = data;
+        var bugsModified = this.state.bugs.concat(bug);
+        this.setState({bugs: bugsModified});
+      }.bind(this),
+      error: function(xhr, status, err){
+        console.log("Error adding bug: ", err);
+      }
+    });
 
   },
 
