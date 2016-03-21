@@ -1,3 +1,7 @@
+var React = require('react'),
+    ReactDOM = require('react-dom'),
+    $ = require('jquery');
+
 var BugList = React.createClass({
   getInitialState: function(){
   	return{

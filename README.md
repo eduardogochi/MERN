@@ -18,3 +18,7 @@ Leave this window open, and open a new cmd to start the mongo shell
 
 To run this script in the mongo shell, type this:
 mongo localhost:27017/bugsdb c:\<PATH_TO_YOUR_MERN_PROJECT>\scripts\init.mongo.js
+
+Browserify
+install browserify globally ot won't show in package.json
+npm install -g browserify
