@@ -1,7 +1,8 @@
 var gulp = require('gulp'),
 	browserify = require('browserify'),
     source = require('vinyl-source-stream'),
-    watchify = require('watchify'); 
+    watchify = require('watchify'),
+    moment = require('moment'); 
 
 gulp.task('bundle', function(){
 	return browserify('src/app.js')
@@ -29,7 +30,7 @@ function makeBundle(){
 	})
 	.pipe(source('bundle.js'))
 	.pipe(gulp.dest('static/'));
-	console.log("Bundle updated successfully!")
+	console.log("["+moment().format('HH:mm:ss')+"]", "> Bundle updated successfully!")
 }
 
 makeBundle();
