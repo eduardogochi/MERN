@@ -8,8 +8,10 @@ var app = express(),
 app.use(express.static('static'));
 
 app.get('/api/bugs', function(req,res){
-	//db.collection("bugs").find().toArray(function(err, docs){
+	db.collection("bugs").find().toArray(function(err, docs){
 	console.log("Query String: ", req.query);
+	res.json(docs);
+	/*
 	var filter = {};
 	if(req.query.priority){
 		filter.priority = req.query.priority;
@@ -17,10 +19,14 @@ app.get('/api/bugs', function(req,res){
 	if(req.query.status){
 		filter.status = req.query.status;
 	}
+	*/
+});
 
+	/*
 	db.collection("bugs").find(filter).toArray(function(err, docs){
 		res.json(docs)
 	});
+	*/
 });
 
 app.use(bodyParser.json());
